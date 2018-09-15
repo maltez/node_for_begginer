@@ -21,11 +21,7 @@ class MyWebpack extends EventEmitter{
         this.deleteFile(path);
       })
       this.on('zip',() => {
-        this.countFiles -= 1;
-        if(!this.count) {
-            console.log('done');
-            // this.toOneFile('min', '.js')
-        }
+          console.log('doneAZAZAZAZAZA');
       })
   }
  copyFile(path1,name) {
@@ -43,7 +39,6 @@ class MyWebpack extends EventEmitter{
         if(err) {
             return err;
         }
-       this.emit('zip') 
     });
   }
   // Проверяем есть ли папка min
@@ -151,6 +146,7 @@ class MyWebpack extends EventEmitter{
                 this.writeStr.write('Jocasino.com');
             }
             this.writeStr.end();
+            this.emit('zip');
         }
     })
     
