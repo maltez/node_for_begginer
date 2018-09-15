@@ -1,0 +1,14 @@
+{
+  "name": "first-web-pack",
+  "version": "0.0.1",
+  "description": "pack that bundle all css, js files, minify and zip  all min files and modify html",
+  "main": "main.js",
+  "scripts": {
+    "prego": "node packresourse.js",
+    "go": "node preparepack.js",
+    "postgo": "node zipmin.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
