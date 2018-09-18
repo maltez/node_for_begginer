@@ -1,0 +1,12 @@
+{
+	"name": "test",
+	"version": "1.0.0",
+	"description": "my test emitter",
+	"main": "index.js",
+	"scripts": {
+		"test": "test",
+		"start": "node index.js"
+	},
+	"author": "Viktor Andriichuk",
+	"license": "MIT"
+}
