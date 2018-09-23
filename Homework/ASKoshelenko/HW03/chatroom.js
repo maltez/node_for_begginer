@@ -7,25 +7,25 @@ let counter = 0;
 let massage = [];
 let history = [];
 
-server.on('connection', (socket) => {  
+server.on('connection', (socket) => { 
   socket.id = counter++; 
   sockets[socket.id] = socket;
-  const writeData = createWriteStream(`his.txt`);  
+   
 
-  console.log(`Connection established from client id: ${socket.id}`);
-  socket.write(`Welcome to chat Client${socket.id + 1} \r\n`);
+  console.log(`Client${socket.id + 1} has logged in`);
+  socket.write(`.:: Welcome to chat Client${socket.id + 1} ::. \r\n`);
 
   socket.on('data', (data) => {
     if(data.toString().charCodeAt() === 13) {
       Object.entries(sockets).forEach(([key,cs]) => {
         if (socket.id % 2 == 0) {
           if(key == socket.id + 1) {
-            cs.write(`Massage from Client${socket.id + 1}: ${massage.join('')} \r\n`);
+            cs.write(`Massage from Client${socket.id + 1}: > ${massage.join('')} < \r\n`);
             history.push(`cl${socket.id + 1}:${massage.join('')}`);
           }
         } 
         else if(key == socket.id - 1) {
-          cs.write(`Massage from Client${socket.id + 1}: ${massage.join('')} \r\n`);
+          cs.write(`Massage from Client${socket.id + 1}: > ${massage.join('')} < \r\n`);
           history.push(`cl${socket.id + 1}:${massage.join('')}`);
         }
       });
@@ -35,11 +35,22 @@ server.on('connection', (socket) => {
   });
 
   socket.on('end', () => {
-    writeData.write(history.join(''));
-    let clienHistory = createWriteStream(`client${socket.id}.his.txt`);
-    clienHistory.write(history.join(''));
+    const clienHistory = createWriteStream(`client${socket.id + 1}.his.txt`);
+    if (socket.id % 2 === 0) {      
+      clienHistory.write(history.filter((el) => (el[2] == socket.id + 1) || (el[2] == socket.id + 2)).join(','));
+    }
+    else if (socket.id % 2 === 1) {
+      clienHistory.write(history.filter((el) => (el[2] == socket.id + 1) || (el[2] == socket.id)).join(','));
+    }
     delete sockets[socket.id];
-    console.log(`Socket ${socket.id} - disconnected`);
+        
+    if(Object.entries(sockets).length === 0) {
+      const allHistory = createWriteStream(`his.txt`);
+      allHistory.write(history.join(','));
+      history = [];
+    } 
+
+    console.log(`Client${socket.id + 1} disconnected`);
   });
 });
 
