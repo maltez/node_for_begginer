@@ -18,4 +18,8 @@
 1. Based on http server create your own 'express' with:
     - Routing
     - Body parser (body after parcew add to request object as field)
-    - Send json
+     - Send json
+
+1. Create your own pm2.
+ - Run processes from the file (config settings)
+ - Create instances of the running file (config settings)
